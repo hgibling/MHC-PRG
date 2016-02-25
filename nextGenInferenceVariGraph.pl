@@ -14,7 +14,7 @@ die unless(more_max(1,2,3) == 3);
 die unless(more_max(3,2,1) == 3);
 die unless(more_max(1,3,2) == 3);
 
-my $kMer_size = 55;  
+my $kMer_size = 31;  
 
 # input parameters
 
