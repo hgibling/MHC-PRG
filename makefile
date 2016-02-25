@@ -6,12 +6,17 @@
 # file or just via -lz)
 # The following values work for me (see below for an alternative):
 #
-LIB_BOOST = /home/dilthey/PnP/libs/boost_1_59_0/
-INCS = -I$(LIB_BOOST) -IGraph -I/home/dilthey/bamtools/bamtools/include -I/home/dilthey/bamtools/bamtools/src
-LIBS = /home/dilthey/PnP/libs/boost_1_59_0/lib/lib/libboost_random.so /home/dilthey/PnP/libs/boost_1_59_0/lib/lib/libboost_filesystem.so /home/dilthey/PnP/libs/boost_1_59_0/lib/lib/libboost_system.so  /home/dilthey/bamtools/bamtools/lib/libbamtools.a /home/dilthey/bamtools/bamtools/lib/libbamtools-utils.so  /home/dilthey/bamtools/zlib-1.2.7/libz.a
+
+BOOSTROOT = /oicr/local/sw/boost-1_59_0
+BAMTOOLSROOT = /.mounts/labs/awadalla/private/hgibling/SOFT/bamtools/2.4.0/bamtools
+ZLIBROOT = /oicr/local/analysis/src/zlib/zlib-1.2.5
+
+LIB_BOOST = $(BOOSTROOT)
+INCS = -I$(LIB_BOOST) -IGraph -I$(BAMTOOLSROOT)/include -I$(BAMTOOLSROOT)/src
+LIBS = $(BOOSTROOT)/lib/libboost_random.so $(BOOSTROOT)/lib/libboost_filesystem.so $(BOOSTROOT)/lib/libboost_system.so  $(BAMTOOLSROOT)/lib/libbamtools.a $(BAMTOOLSROOT)/lib/libbamtools-utils.a  $(ZLIBROOT)/libz.a
 
 # an alternative line (courtesy Peter Humburg, not working for me but for him) is
-# LIBS = /home/dilthey/PnP/libs/boost_1_52_0/lib/lib/libboost_random.so /home/dilthey/PnP/libs/boost_1_52_0/lib/lib/libboost_filesystem.so /home/dilthey/PnP/libs/boost_1_52_0/lib/lib/libboost_system.so /home/dilthey/bamtools/bamtools/lib/libbamtools.so /home/dilthey/bamtools/bamtools/lib/libbamtools-utils.a -lz
+# LIBS = $(BOOSTROOT)/lib/libboost_random.so $(BOOSTROOT)/lib/libboost_filesystem.so $(BOOSTROOT)/lib/libboost_system.so $(BAMTOOLSROOT)/lib/libbamtools.so $(BAMTOOLSROOT)/lib/libbamtools-utils.a -lz
 
 MKDIR_P = mkdir -p
 
