@@ -44,11 +44,11 @@ GetOptions ('graph:s' => \$graph,
  
 # external programs path
 
-my $stampy_bin = qq(/home/dilthey/Stampy/stampy-1.0.20/stampy.py);
-my $PICARD_SAM2FASTQ = '/Net/fs1/home/dilthey/picard/picard-tools-1.83/SamToFastq.jar';
-my $BWA_bin = qq(/home/dilthey/BWA/bwa-0.6.2/bwa);
-my $samtools_bin = qq(/home/dilthey/samtools-0.1.18/samtools);
-my $platypus_executable = qq(/home/dilthey/Platypus/Platypus_0.2.0/Platypus.py);
+my $stampy_bin = qq(/oicr/local/analysis/sw/stampy/stampy-1.0.13/stampy.py);
+my $PICARD_SAM2FASTQ = '/oicr/local/analysis/sw/picard/picard-tools-1.83/SamToFastq.jar';
+my $BWA_bin = qq(/oicr/local/analysis/sw/bwa/0.6.2);
+my $samtools_bin = qq(/oicr/local/analysis/sw/samtools/samtools-0.1.18/samtools);
+my $platypus_executable = qq(/.mounts/labs/awadallalab/private/hgibling/SOFT/Platypus/0.8.1/Platypus_0.8.1/Platypus.py);
 
 # external data paths
 
