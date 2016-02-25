@@ -8,7 +8,7 @@
 #
 
 BOOSTROOT = /oicr/local/sw/boost-1_59_0
-BAMTOOLSROOT = /.mounts/labs/awadalla/private/hgibling/SOFT/bamtools/2.4.0/bamtools
+BAMTOOLSROOT = /.mounts/labs/awadallalab/private/hgibling/SOFT/bamtools/2.4.0/bamtools
 ZLIBROOT = /oicr/local/analysis/src/zlib/zlib-1.2.5
 
 LIB_BOOST = $(BOOSTROOT)
