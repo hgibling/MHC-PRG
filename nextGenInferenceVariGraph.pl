@@ -52,18 +52,20 @@ my $platypus_executable = qq(/.mounts/labs/awadallalab/private/hgibling/SOFT/Pla
 
 # external data paths
 
-my $path_to_PGF_haplotype = qq(../data/mhc_ref_8_haplotypes/pgf_ref.fasta);
-my $reference_genome_FASTA_path = qq(../data/GRCh37.60/fasta);
-my $path_to_HumanGenome_graph = qq(../data/GRCh37.60/graph/alex_grc37_auto_X_Y.k${kMer_size}.ctx);
+my $mhc_prg_base = qq(/.mounts/labs/awadallalab/private/hgibling/SOFT/MHC-PRG/20160217/MHC-PRG);
+
+my $path_to_PGF_haplotype = qq(${mhc_prg_base}/data/mhc_ref_8_haplotypes/pgf_ref.fasta);
+my $reference_genome_FASTA_path = qq(${mhc_prg_base}/data/GRCh37.60/fasta);
+my $path_to_HumanGenome_graph = qq(${mhc_prg_base}/data/GRCh37.60/graph/alex_grc37_auto_X_Y.k${kMer_size}.ctx);
 
 # temporary directory for read re-mapping
 
-my $remapping_basedir = qq(../tmp/readReMapping/);
+my $remapping_basedir = qq(${mhc_prg_base}/tmp/readReMapping/);
 
 # data lookup paths
 
-my $sample_path = $localOxford ? qq(/gpfs1/well/gsk_hla/CortexGraphs/) : qq(../data/samples/CortexGraphs);
-my $base_path_BAMs = $localOxford ? qq(/gpfs1/well/gsk_hla/bam_output/) : qq(../data/samples/BAMs/);
+my $sample_path = $localOxford ? qq(/gpfs1/well/gsk_hla/CortexGraphs/) : qq(${mhc_prg_base}/data/samples/CortexGraphs);
+my $base_path_BAMs = $localOxford ? qq(/gpfs1/well/gsk_hla/bam_output/) : qq(${mhc_prg_base}/data/samples/BAMs/);
 
 ### do not modify anything below this line
 
@@ -120,7 +122,7 @@ my $expected_required_kMers_file = $expected_kmer_graph_file.".requiredKMers";
 unless((-e $expected_required_kMers_file) and (!$redo) and ((stat ($expected_kmer_graph_file))[9] < (stat ($expected_required_kMers_file))[9]))
 {
 	print "Determining required kMers\n";
-	my $cmd = qq(../bin/MHC-PRG domode determineRequiredKMers $expected_kmer_graph_file $expected_required_kMers_file);
+	my $cmd = qq(${mhc_prg_base}/bin/MHC-PRG domode determineRequiredKMers $expected_kmer_graph_file $expected_required_kMers_file);
 	my $output = `$cmd`;    
 	unless(-e $expected_required_kMers_file)
 	{
@@ -146,7 +148,7 @@ unless((-e $kMer_count_reference) and (!$redo))
 {
 	print "Count reference kMers\n";
 	#my $cmd = qq($cortex_binary --multicolour_bin $path_to_HumanGenome_graph  --kmer_size $kMer_size --mem_height ${memory_height} --mem_width ${memory_width} --dilthey2 $expected_required_kMers_file);
-	my $cmd = qq(./readCortexCoverage.pl --cortex_bin $path_to_HumanGenome_graph  --kMer_size $kMer_size --interesting_kMers $expected_required_kMers_file);
+	my $cmd = qq(${mhc_prg_base}/src/readCortexCoverage.pl --cortex_bin $path_to_HumanGenome_graph  --kMer_size $kMer_size --interesting_kMers $expected_required_kMers_file);
 	my $output = `$cmd`;
 	unless(-e $kMer_count_reference)
 	{
@@ -178,7 +180,7 @@ close(KMERS);
 my $graphForFileName = $graph;
 $graphForFileName =~ s/^.+tmp2//;
 $graphForFileName =~ s/\W/_/g;
-my $kMer_count_sample_required = qq(../tmp/kMerCount_).join('_', $graphForFileName, $sample, $kMer_size,  'required');
+my $kMer_count_sample_required = qq(${mhc_prg_base}/tmp/kMerCount_).join('_', $graphForFileName, $sample, $kMer_size,  'required');
 my $kMer_count_sample = $kMer_count_sample_required.'.binaryCount';
 if($sample ne 'N')
 {
@@ -187,7 +189,7 @@ if($sample ne 'N')
 		print "Count sample kMers\n";
 		copy($expected_required_kMers_file, $kMer_count_sample_required) or die "Cannot copy $expected_required_kMers_file to $kMer_count_sample_required";	
 		#my $cmd = qq($cortex_binary --multicolour_bin $sample_graph_file  --kmer_size $kMer_size --mem_height ${memory_height} --mem_width ${memory_width} --dilthey2 $kMer_count_sample_required);
-		my $cmd = qq(./readCortexCoverage.pl --cortex_bin $sample_graph_file  --kMer_size $kMer_size --interesting_kMers $kMer_count_sample_required);
+		my $cmd = qq(${mhc_prg_base}/src/readCortexCoverage.pl --cortex_bin $sample_graph_file  --kMer_size $kMer_size --interesting_kMers $kMer_count_sample_required);
 		
 		my $output = `$cmd`;
 		unless(-e $kMer_count_sample)
@@ -316,7 +318,7 @@ if((not -e $output_corrected_kMers_reference) or ($redo))
 }
 
 my $label_part = ($labelOnly) ? ('--labelonly') : '';
-my $final_command = qq(../bin/MHC-PRG domode nextGenInference $expected_kmer_graph_file $output_corrected_kMers_reference $kMer_count_sample $label_part --genotypingMode 8);
+my $final_command = qq(${mhc_prg_base}/bin/MHC-PRG domode nextGenInference $expected_kmer_graph_file $output_corrected_kMers_reference $kMer_count_sample $label_part --genotypingMode 8);
 print "Execute:\n", $final_command, "\n\n";
 
 if($collect eq '3')
@@ -958,7 +960,7 @@ if($collect eq '3')
 				print "READS: $remapping_dir_reads \n\n";
 				print "REFERENCES: $remapping_dir_rawGenome_1 and $remapping_dir_rawGenome_2\nn";
 				print "PAIRED-END: 0\n\n";
-				print "Command suggestion:\ncd /gpfs1/well/gsk_hla/readLengthSimulator/src; ./alignGenome.pl --action prepare --reference_genome_FASTA_path $remapping_dir_rawGenome_1 --paired_end 0 --input_directory $remapping_dir_reads --name_for_project REMAPPING_${sample}_1 --gz $needGZ; ./alignGenome.pl --action prepare --reference_genome_FASTA_path $remapping_dir_rawGenome_2 --paired_end 0 --input_directory $remapping_dir_reads --name_for_project REMAPPING_${sample}_2 --gz $needGZ\n\n\n";
+				print "Command suggestion:\ncd /gpfs1/well/gsk_hla/readLengthSimulator/src; ${mhc_prg_base}/src/alignGenome.pl --action prepare --reference_genome_FASTA_path $remapping_dir_rawGenome_1 --paired_end 0 --input_directory $remapping_dir_reads --name_for_project REMAPPING_${sample}_1 --gz $needGZ; ${mhc_prg_base}/src/alignGenome.pl --action prepare --reference_genome_FASTA_path $remapping_dir_rawGenome_2 --paired_end 0 --input_directory $remapping_dir_reads --name_for_project REMAPPING_${sample}_2 --gz $needGZ\n\n\n";
 				print "\n\nFinally, copy BAMs to\n${sorted_bam_1}\n${sorted_bam_2}\n";
 				exit;
 			}
