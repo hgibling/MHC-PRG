@@ -18,6 +18,8 @@ my $kMer_size = 31;
 
 # input parameters
 
+my $bam_dir;
+my $cortex_dir;
 my $graph;   
 my $sample;
 my $redo = 0;
@@ -31,7 +33,9 @@ if(hostname() =~ /(sequoia)|(elm)|(birch)|(banyan)|(cluster3)/)
 	$localOxford = 1;
 }
 
-GetOptions ('graph:s' => \$graph,
+GetOptions ('bamDir:s' => \$bam_dir,
+ 'cortexDir:s' => \$cortex_dir,
+ 'graph:s' => \$graph,
  'sample:s' => \$sample, 
  'redo:s' => \$redo,  
  'collect:s' => \$collect, 
@@ -64,8 +68,8 @@ my $remapping_basedir = qq(${mhc_prg_base}/tmp/readReMapping/);
 
 # data lookup paths
 
-my $sample_path = $localOxford ? qq(/gpfs1/well/gsk_hla/CortexGraphs/) : qq(${mhc_prg_base}/data/samples/CortexGraphs);
-my $base_path_BAMs = $localOxford ? qq(/gpfs1/well/gsk_hla/bam_output/) : qq(${mhc_prg_base}/data/samples/BAMs/);
+my $sample_path = $localOxford ? qq(/gpfs1/well/gsk_hla/CortexGraphs/) : qq(${cortex_dir});
+my $base_path_BAMs = $localOxford ? qq(/gpfs1/well/gsk_hla/bam_output/) : qq(${bam_dir});
 
 ### do not modify anything below this line
 
