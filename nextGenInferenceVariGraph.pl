@@ -20,6 +20,7 @@ my $kMer_size = 31;
 
 my $bam_dir;
 my $cortex_dir;
+my $output_dir;
 my $graph;   
 my $sample;
 my $redo = 0;
@@ -35,6 +36,7 @@ if(hostname() =~ /(sequoia)|(elm)|(birch)|(banyan)|(cluster3)/)
 
 GetOptions ('bamDir:s' => \$bam_dir,
  'cortexDir:s' => \$cortex_dir,
+ 'outputDir:s' => \$output_dir,
  'graph:s' => \$graph,
  'sample:s' => \$sample, 
  'redo:s' => \$redo,  
@@ -184,7 +186,7 @@ close(KMERS);
 my $graphForFileName = $graph;
 $graphForFileName =~ s/^.+tmp2//;
 $graphForFileName =~ s/\W/_/g;
-my $kMer_count_sample_required = qq(${mhc_prg_base}/tmp/kMerCount_).join('_', $graphForFileName, $sample, $kMer_size,  'required');
+my $kMer_count_sample_required = qq(${output_dir}/kMerCount_).join('_', $graphForFileName, $sample, $kMer_size,  'required');
 my $kMer_count_sample = $kMer_count_sample_required.'.binaryCount';
 if($sample ne 'N')
 {
