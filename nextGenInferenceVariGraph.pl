@@ -50,7 +50,7 @@ GetOptions ('bamDir:s' => \$bam_dir,
 
 my $stampy_bin = qq(/oicr/local/analysis/sw/stampy/stampy-1.0.13/stampy.py);
 my $PICARD_SAM2FASTQ = '/oicr/local/analysis/sw/picard/picard-tools-1.83/SamToFastq.jar';
-my $BWA_bin = qq(/oicr/local/analysis/sw/bwa/0.6.2);
+my $BWA_bin = qq(/oicr/local/analysis/sw/bwa/0.6.2/bin/bwa);
 my $samtools_bin = qq(/oicr/local/analysis/sw/samtools/samtools-0.1.18/samtools);
 my $platypus_executable = qq(/.mounts/labs/awadallalab/private/hgibling/SOFT/Platypus/0.8.1/Platypus_0.8.1/Platypus.py);
 
