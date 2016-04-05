@@ -979,7 +979,9 @@ if($collect eq '3')
 				die if($needGZ);
 				
 				my @fqfiles = glob($remapping_dir_reads.'/*.fastq');
-					
+				
+				die "No fastq files in directory $remapping_dir_reads" unless (scalar(@fqfiles));
+	
 				my %pe_pairs = map {$_ => 1} map {($_ =~ /.+\/(.+)_(1|2).+?$/) or die "Cannot parse filename $_"; $1} @fqfiles;
 				my %pe_counts;
 				my @pe_lists = ([], []);
